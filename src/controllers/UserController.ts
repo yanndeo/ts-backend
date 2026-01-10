@@ -1,6 +1,7 @@
 import { UserService } from "../services/UserService";
 import { Request, Response } from "express";
 import { User } from '../models/User';
+import { CreateUserSchema } from "../dtos/CreateUserDto";
 
 
 const userService = new UserService();
@@ -10,11 +11,16 @@ const userService = new UserService();
 export class UserController {
 
     static create(req: Request, res: Response): Response {
-        const {email, isAdmin} = req.body;
+        const result = CreateUserSchema.safeParse(req.body);
 
-        if (typeof email !== 'string' || typeof isAdmin !== 'boolean') {
-            return res.status(400).json({ error: "invalid payload"});
+        if (! result.success) {
+            return res.status(400).json({
+                error: "invalid request body",
+                details: result.error.format()
+            })
         }
+
+        const {email, isAdmin} = result.data;
 
         const user = userService.createUser(email, isAdmin);
 
