@@ -2,6 +2,7 @@ import { UserService } from "../services/UserService";
 import { Request, Response } from "express";
 import { User } from '../models/User';
 import { CreateUserSchema } from "../dtos/CreateUserDto";
+import { HttpError } from "../errors/HttpError";
 
 
 const userService = new UserService();
@@ -14,10 +15,8 @@ export class UserController {
         const result = CreateUserSchema.safeParse(req.body);
 
         if (! result.success) {
-            return res.status(400).json({
-                error: "invalid request body",
-                details: result.error.format()
-            })
+
+            return next(new HttpError(400, "invalid request body"))
         }
 
         const {email, isAdmin} = result.data;
@@ -49,4 +48,8 @@ export class UserController {
         return res.json(user);
     }
 
+}
+
+function next(arg0: HttpError): Response<any, Record<string, any>> {
+    throw new Error("Function not implemented.");
 }
