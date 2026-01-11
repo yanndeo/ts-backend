@@ -1,5 +1,5 @@
 import { UserService } from "../services/UserService";
-import { Request, Response } from "express";
+import { Request, Response, next } from 'express';
 import { User } from '../models/User';
 import { CreateUserSchema } from "../dtos/CreateUserDto";
 import { HttpError } from "../errors/HttpError";
@@ -47,8 +47,24 @@ export class UserController {
         return res.json(user);
     }
 
+
+    staticdelete(req: Request, res: Response): Response {
+        const userId = Number(req.params.id);
+
+        if (Number.isNaN(userId)) {
+            return res.status(400).json({ error: "invalid id"});
+        }
+
+        const user = userService.getById(userId);
+
+        if(!user) {
+            return res.status(404).json({error: "user not found"});
+        }
+
+        //userService.deleteUser(userId);
+
+        return res.status(204).send();
+    }
+
 }
 
-function next(arg0: HttpError): Response<any, Record<string, any>> {
-    throw new Error("Function not implemented.");
-}
