@@ -8,7 +8,6 @@ import { HttpError } from "../errors/HttpError";
 const userService = new UserService();
 
 
-
 export class UserController {
 
     static create(req: Request, res: Response): Response {

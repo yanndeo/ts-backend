@@ -4,7 +4,7 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
 
-const JWT_SECRET = 'your_jwt_secret_key';
+const JWT_SECRET = 'SUPER_SECRET_KEY';
 
 export class AuthService {
 
