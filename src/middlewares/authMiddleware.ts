@@ -7,7 +7,7 @@ const JWT_SECRET = 'SUPER_SECRET_KEY';
 
 export interface  AuthPayload {
     userId: number;
-    isAdmin: boolean;
+    role: "USER" | "ADMIN";
 }
 
 export function authMiddleware(
@@ -29,6 +29,7 @@ export function authMiddleware(
 
     try {
         const payload = jwt.verify(token, JWT_SECRET) as AuthPayload;
+        
         req.user = payload;
         
         next();

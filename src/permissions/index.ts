@@ -1,0 +1,9 @@
+export enum Permission {
+    DELETE_USER = "DELETE_USER",
+    READ_USER = "READ_USER",
+    DELETE_ANY_USER = "DELETE_ANY_USER",
+
+    READ_POST = "READ_POST",
+    EDIT_POST = "EDIT_POST",
+    DELETE_POST = "DELETE_POST",
+}
