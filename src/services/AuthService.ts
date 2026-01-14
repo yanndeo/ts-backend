@@ -27,7 +27,7 @@ export class AuthService {
             id: this.users.length + 1,
             email,
             passwordHash,
-            isAdmin
+            role: isAdmin ? "ADMIN" : "USER"
         };
 
         this.users.push(newUser);
@@ -50,7 +50,7 @@ export class AuthService {
 
         // Generate JWT token
         const token = jwt.sign(
-            { userId: user.id, isAdmin: user.isAdmin },
+            { userId: user.id, role: user.role },
             JWT_SECRET,
             { expiresIn: '1h' }
         );
