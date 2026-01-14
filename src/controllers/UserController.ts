@@ -48,7 +48,7 @@ export class UserController {
     }
 
 
-    staticdelete(req: Request, res: Response): Response {
+    static delete(req: Request, res: Response): Response {
         const userId = Number(req.params.id);
 
         if (Number.isNaN(userId)) {
