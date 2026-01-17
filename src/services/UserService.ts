@@ -12,10 +12,7 @@ export class UserService {
             id: this.currentId++,
             email,
             passwordHash,
-            isAdmin,
-=======
             role: isAdmin ? "ADMIN" : "USER"
->>>>>>> origin/dev
         };
 
         this.users.push(user);
