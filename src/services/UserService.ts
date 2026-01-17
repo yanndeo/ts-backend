@@ -7,11 +7,12 @@ export class UserService {
     private currentId = 1;
 
 
-    createUser(email: string, isAdmin: boolean): User {
+    createUser(email: string, passwordHash: string, isAdmin: boolean): User {
         const user: User = {
             id: this.currentId++,
             email,
-            isAdmin
+            passwordHash,
+            isAdmin,
         };
 
         this.users.push(user);

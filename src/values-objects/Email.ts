@@ -1,5 +1,5 @@
 
-class Email {
+export class Email {
 
     private readonly value: string;
 
@@ -8,8 +8,8 @@ class Email {
     }
 
 
-    static create(email: string): Email {
-        const normalized = email.trim().toLowerCase();
+    static create(raw: string): Email {
+        const normalized = raw.trim().toLowerCase();
 
         if (! Email.isValid(normalized)) {
             throw new Error("Invalid email");
