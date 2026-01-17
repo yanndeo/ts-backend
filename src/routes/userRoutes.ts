@@ -1,7 +1,8 @@
 import { Router } from "express";
 import { UserController } from "../controllers/UserController";
 import { authMiddleware } from "../middlewares/authMiddleware";
-import { authorizationDeleteUser } from "../middlewares/authorizeDeleteUser";
+import { authorize } from "../middlewares/authorize";
+import { Permission } from "../permissions";
 
 const router = Router();
 
@@ -12,7 +13,7 @@ router.get("/:id", UserController.getById);
 router.delete(
   "/users/:id",
   authMiddleware,
-  authorizationDeleteUser,
+  authorize(Permission.DELETE_USER),
   UserController.delete
 );
 

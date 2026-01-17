@@ -13,6 +13,9 @@ export class UserService {
             email,
             passwordHash,
             isAdmin,
+=======
+            role: isAdmin ? "ADMIN" : "USER"
+>>>>>>> origin/dev
         };
 
         this.users.push(user);

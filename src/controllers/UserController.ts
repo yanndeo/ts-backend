@@ -1,5 +1,5 @@
 import { UserService } from "../services/UserService";
-import { Request, Response, next } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import { User } from '../models/User';
 import { CreateUserSchema } from "../dtos/CreateUserDto";
 import { HttpError } from "../errors/HttpError";
@@ -14,13 +14,12 @@ export class UserController {
         const result = CreateUserSchema.safeParse(req.body);
 
         if (! result.success) {
-
-            return next(new HttpError(400, "invalid request body"))
+            return res.status(400).json({ error: "invalid request body"});
         }
 
-        const {email, isAdmin} = result.data;
+        const {email, password, isAdmin} = result.data;
 
-        const user = userService.createUser(email, isAdmin);
+        const user = userService.createUser(email, password, isAdmin);
 
         return res.status(201).json(user);
     }
