@@ -1,4 +1,6 @@
 import { User } from "../models/User";
+import { Email } from "../values-objects/Email";
+import { UserId } from "../values-objects/UserId";
 
 export class UserService {
 
@@ -7,10 +9,10 @@ export class UserService {
     private currentId = 1;
 
 
-    createUser(email: string, passwordHash: string, isAdmin: boolean): User {
+    createUser(email: Email, passwordHash: string, isAdmin: boolean): User {
         const user: User = {
             id: this.currentId++,
-            email,
+            email: email.getValue(),
             passwordHash,
             role: isAdmin ? "ADMIN" : "USER"
         };
@@ -26,7 +28,7 @@ export class UserService {
     }
     
 
-    getById(id: number): User | undefined {
-        return this.users.find(u => u.id === id);
+    getById(id: UserId): User | undefined {
+        return this.users.find(u => u.id === id.getValue());
     }
 }

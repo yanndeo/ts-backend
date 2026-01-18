@@ -1,5 +1,4 @@
 
-
 export class UserId { 
 
     private readonly value: number;

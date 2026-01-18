@@ -3,6 +3,8 @@ import { Request, Response, NextFunction } from 'express';
 import { User } from '../models/User';
 import { CreateUserSchema } from "../dtos/CreateUserDto";
 import { HttpError } from "../errors/HttpError";
+import { UserId } from "../values-objects/UserId";
+import { Email } from "../values-objects/Email";
 
 
 const userService = new UserService();
@@ -19,7 +21,11 @@ export class UserController {
 
         const {email, password, isAdmin} = result.data;
 
-        const user = userService.createUser(email, password, isAdmin);
+        const user = userService.createUser(
+            Email.create(email),
+            password,
+            isAdmin
+        );
 
         return res.status(201).json(user);
     }
@@ -31,11 +37,7 @@ export class UserController {
     }
 
     static getById(req: Request, res: Response): Response {
-        const userId = Number(req.params.id)
-
-        if (Number.isNaN(userId)) {
-            return res.status(400).json({ error: "invalid id"});
-        }
+        const userId = UserId.create(Number(req.params.id));
 
         const user = userService.getById(userId);
 
@@ -48,11 +50,7 @@ export class UserController {
 
 
     static delete(req: Request, res: Response): Response {
-        const userId = Number(req.params.id);
-
-        if (Number.isNaN(userId)) {
-            return res.status(400).json({ error: "invalid id"});
-        }
+        const userId = UserId.create(Number(req.params.id));
 
         const user = userService.getById(userId);
 

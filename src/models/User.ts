@@ -1,3 +1,5 @@
+import { Email } from "../values-objects/Email";
+import { UserId } from "../values-objects/UserId";
 
 export interface User {
     id: number;
