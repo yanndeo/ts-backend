@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { UserPolicy } from "../policies/UserPolicy";
+import { Permission } from "../permissions";
 
 export function authorizationDeleteUser(
     req: Request,
@@ -18,7 +19,7 @@ export function authorizationDeleteUser(
         return res.status(400).json({ error: "Invalid user ID" });
     }
 
-    const canDelete = UserPolicy.canDeleteUser(authUser, targetUserId);
+    const canDelete = UserPolicy.can(authUser, Permission.DELETE_USER, targetUserId);
 
     if (!canDelete) {
         return res.status(403).json({ error: "Forbidden" });
